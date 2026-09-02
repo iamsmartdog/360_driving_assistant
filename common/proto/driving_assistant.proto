@@ -1,0 +1,176 @@
+syntax = "proto2";
+package driving_assistant;
+
+// ==================== 通用消息 ====================
+
+// 通用响应
+message GeneralResponse {
+    required bool success = 1;
+    optional string message = 2;
+    optional int32 error_code = 3;
+}
+
+// ==================== 用户认证 ====================
+
+// 登录请求
+message LoginRequest {
+    required string username = 1;
+    required string password = 2;   // 明文密码（由服务端加盐哈希存储）
+    optional string captcha = 3;        // 验证码
+}
+
+// 登录响应
+message LoginResponse {
+    required bool success = 1;
+    optional string message = 2;
+    optional string nickname = 3;       // 用户昵称
+    optional int32 user_id = 4;         // 用户ID
+}
+
+// 注册请求
+message RegisterRequest {
+    required string username = 1;
+    required string password = 2;   // 明文密码（由服务端加盐哈希存储）
+    required string nickname = 3;       // 用户昵称
+}
+
+// 注册响应
+message RegisterResponse {
+    required bool success = 1;
+    optional string message = 2;
+}
+
+// ==================== 视频记录 ====================
+
+// 视频记录信息（含详细信息）
+message VideoRecord {
+    required int32 id = 1;
+    required string username = 2;
+    required string video_name = 3;
+    required int32 video_size = 4;       // 单位：MB
+    optional string video_path = 5;
+    optional string record_type = 6;     // 行车记录/倒车记录/鸟瞰记录/特征记录
+    optional string created_at = 7;      // 创建时间
+    // 视频详情
+    optional int32 duration_sec = 8;     // 视频时长（秒）
+    optional string resolution = 9;      // 分辨率 如 "1920x1080"
+    optional int32 fps = 10;             // 帧率
+    optional string camera_source = 11;  // 摄像头来源
+    // 播放记录
+    optional int32 last_play_sec = 12;   // 上次播放到的秒数
+    optional int32 play_count = 13;      // 播放次数
+}
+
+// 获取视频列表请求
+message GetVideoListRequest {
+    optional string username = 1;        // 为空则获取全部
+    optional int32 page = 2;             // 分页页码，从1开始
+    optional int32 page_size = 3;        // 每页条数
+}
+
+// 获取视频列表响应
+message GetVideoListResponse {
+    required bool success = 1;
+    repeated VideoRecord records = 2;
+    optional int32 total_count = 3;      // 总条数
+}
+
+// 删除视频请求
+message DeleteVideoRequest {
+    required int32 video_id = 1;
+    required string username = 2;        // 验证权限
+}
+
+// 上传视频记录请求（录制完成后调用）
+message UploadVideoRequest {
+    required string username = 1;
+    required string video_name = 2;
+    required int32 video_size = 3;
+    optional string video_path = 4;
+    optional string record_type = 5;
+    // 视频详情
+    optional int32 duration_sec = 6;     // 时长（秒）
+    optional string resolution = 7;      // 分辨率
+    optional int32 fps = 8;              // 帧率
+    optional string camera_source = 9;   // 摄像头来源
+}
+
+// 更新播放记录请求
+message UpdatePlayRecordRequest {
+    required int32 video_id = 1;
+    required string username = 2;
+    required int32 last_play_sec = 3;    // 上次播放到的秒数
+}
+
+// ==================== 连接测试 ====================
+
+// 心跳请求
+message HeartbeatRequest {
+    required string client_id = 1;
+    required int64 timestamp = 2;
+}
+
+// 心跳响应
+message HeartbeatResponse {
+    required bool success = 1;
+    required int64 timestamp = 2;
+    optional string server_version = 3;
+}
+
+// ==================== 截图记录 ====================
+
+// 截图记录信息
+message ScreenshotRecord {
+    required int32 id = 1;
+    required string username = 2;
+    required string screenshot_name = 3;
+    required int32 screenshot_size = 4;       // 单位：KB
+    optional string screenshot_path = 5;
+    optional string record_type = 6;          // 行车截图/播放截图/倒车截图
+    optional string detection_info = 7;       // 检测结果JSON摘要
+    optional string resolution = 8;           // 分辨率
+    optional string camera_source = 9;        // 摄像头来源
+    optional string created_at = 10;
+}
+
+// 上传截图请求
+message UploadScreenshotRequest {
+    required string username = 1;
+    required string screenshot_name = 2;
+    required int32 screenshot_size = 3;       // KB
+    optional string screenshot_path = 4;
+    optional string record_type = 5;          // 行车截图/播放截图/倒车截图
+    optional string detection_info = 6;       // 检测结果JSON
+    optional string resolution = 7;
+    optional string camera_source = 8;
+}
+
+// 获取截图列表请求
+message GetScreenshotListRequest {
+    optional string username = 1;
+    optional string record_type = 2;          // 按类型筛选
+    optional int32 page = 3;
+    optional int32 page_size = 4;
+}
+
+// 获取截图列表响应
+message GetScreenshotListResponse {
+    required bool success = 1;
+    repeated ScreenshotRecord records = 2;
+    optional int32 total_count = 3;
+}
+
+// ==================== 系统配置 ====================
+
+// 获取系统配置请求
+message GetConfigRequest {
+    required string username = 1;
+}
+
+// 系统配置响应
+message GetConfigResponse {
+    required bool success = 1;
+    optional int32 max_storage = 2;      // 最大存储空间(GB)
+    optional bool auto_delete = 3;       // 是否自动删除
+    optional string server_version = 4;  // 服务器版本
+}

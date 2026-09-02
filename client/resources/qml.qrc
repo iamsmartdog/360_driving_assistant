@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- 主框架界面（启动和主容器） -->
+        <file alias="views/MainView.qml">../src/views/main/MainView.qml</file>
+        <file alias="views/SplashView.qml">../src/views/main/SplashView.qml</file>
+        <file alias="views/SettingsView.qml">../src/views/main/SettingsView.qml</file>
+        <file alias="views/LineIcon.qml">../src/views/main/LineIcon.qml</file>
+
+        <!-- 认证相关界面 -->
+        <file alias="views/LoginView.qml">../src/views/auth/LoginView.qml</file>
+        <file alias="views/RegisterView.qml">../src/views/auth/RegisterView.qml</file>
+
+        <!-- 功能模式界面 - 驾驶模式 -->
+        <file alias="views/VideRecordView.qml">../src/views/features/driving/VideRecordView.qml</file>
+        <file alias="views/DrivingModeView.qml">../src/views/features/driving/DrivingModeView.qml</file>
+        <file alias="views/FeatureRecordView.qml">../src/views/features/driving/FeatureRecordView.qml</file>
+
+        <!-- 功能模式界面 - 鸟瞰模式 -->
+        <file alias="views/BirdView.qml">../src/views/features/bird/BirdView.qml</file>
+
+        <!-- 功能模式界面 - 倒车模式 -->
+        <file alias="views/ReverseModeView.qml">../src/views/features/reverse/ReverseModeView.qml</file>
+
+        <!-- 功能模式界面 - 播放 -->
+        <file alias="views/VideoPlaybackWindow.qml">../src/views/features/playback/VideoPlaybackWindow.qml</file>
+
+        <!-- 功能模式界面 - 系统设置 -->
+        <file alias="views/SystemSettingView.qml">../src/views/features/system/SystemSettingView.qml</file>
+    </qresource>
+</RCC>

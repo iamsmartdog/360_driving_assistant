@@ -1,0 +1,23 @@
+# 编译输出目录
+build/
+build_x86/
+build_monitor/
+deploy_aarch64/
+
+# cmake生成文件
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# 日志、临时文件
+*.log
+*.tmp
+*.swp
+
+# 模型文件(可选，如果想上传onnx就删掉这一行)
+# *.onnx
+
+# IDE
+.vscode/
+.idea/
