@@ -18,7 +18,6 @@ Makefile
 #
 .trae/
 .zcode/
-test/
 test_images/
 
 # 模型文件(可选，如果想上传onnx就删掉这一行)
